@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: yopass
+  namespace: yopass
+spec:
+  selector:
+    app.kubernetes.io/name: yopass
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 1337

@@ -1,0 +1,19 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: yopass
+  namespace: yopass
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  rules:
+  - host: yopass.radioco.local
+    http:
+      paths:
+      - backend:
+          service:
+            name: yopass
+            port:
+              name: http
+        path: /
+        pathType: Prefix
