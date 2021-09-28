@@ -17,7 +17,7 @@ spec:
         - name: yopass
           image: jhaals/yopass
           args:
-            - "--redis=redis://localhost:6379/0"
+            - "--redis=redis://redis:6379/0"
             - "--database=redis"
           ports:
             - name: http
@@ -29,15 +29,32 @@ spec:
             requests:
               cpu: 100m
               memory: 50Mi
-        - name: yopass-redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  namespace: yopass
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: redis
+    spec:
+      containers:
+        - name: redis
           image: redis
-          resources:
-            limits:
-              cpu: 100m
-              memory: 100Mi
-            requests:
-              cpu: 100m
-              memory: 100Mi
           ports:
             - name: redis
               containerPort: 6379
+          resources:
+            limits:
+              cpu: 100m
+              memory: 50Mi
+            requests:
+              cpu: 100m
+              memory: 50Mi

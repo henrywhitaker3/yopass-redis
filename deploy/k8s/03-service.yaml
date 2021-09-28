@@ -10,3 +10,16 @@ spec:
   ports:
     - name: http
       port: 1337
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: redis
+  namespace: yopass
+spec:
+  selector:
+    app.kubernetes.io/name: redis
+  type: ClusterIP
+  ports:
+    - name: redis
+      port: 6379
